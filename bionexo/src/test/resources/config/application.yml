@@ -1,7 +1,7 @@
 # ===================================================================
-# Spring Boot configuration for the "dev" profile.
+# Spring Boot configuration.
 #
-# This configuration overrides the application.yml file.
+# This configuration is used for unit/integration tests.
 #
 # More information on profiles: https://www.jhipster.tech/profiles/
 # More information on configuration properties: https://www.jhipster.tech/common-application-properties/
@@ -13,61 +13,54 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
-logging:
-    level:
-        ROOT: DEBUG
-        io.github.jhipster: DEBUG
-        br.com.bionexo: DEBUG
 
 spring:
-    profiles:
-        active: dev
-        include:
-            - swagger
-            # Uncomment to activate TLS for the dev profile
-            #- tls
-    devtools:
-        restart:
-            enabled: true
-        livereload:
-            enabled: false # we use Webpack dev server + BrowserSync for livereload
-    jackson:
-        serialization:
-            indent-output: true
+    application:
+        name: bionexo
+    cache:
+        type: simple
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:h2:mem:bionexo;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-        username: bionexo
+        name:
+        username:
         password:
         hikari:
             auto-commit: false
-    h2:
-        console:
-            enabled: false
     jpa:
         database-platform: io.github.jhipster.domain.util.FixedH2Dialect
         database: H2
-        show-sql: true
+        open-in-view: false
+        show-sql: false
+        hibernate:
+            ddl-auto: none
+            naming:
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
         properties:
             hibernate.id.new_generator_mappings: true
             hibernate.connection.provider_disables_autocommit: true
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
+            hibernate.hbm2ddl.auto: validate
+            hibernate.jdbc.time_zone: UTC
     liquibase:
-        contexts: dev
+        contexts: test
     mail:
         host: localhost
-        port: 25
-        username:
-        password:
     messages:
-        cache-duration: PT1S # 1 second, see the ISO 8601 standard
+        basename: i18n/messages
+    mvc:
+        favicon:
+            enabled: false
     thymeleaf:
-        cache: false
+        mode: HTML
+
 
 server:
-    port: 8080
+    port: 10344
+    address: localhost
 
 # ===================================================================
 # JHipster specific properties
@@ -76,41 +69,29 @@ server:
 # ===================================================================
 
 jhipster:
-    http:
-        version: V_1_1 # To use HTTP/2 you will need to activate TLS (see application-tls.yml)
-    cache: # Cache configuration
-        ehcache: # Ehcache configuration
-            time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
-            max-entries: 100 # Number of objects in each cache entry
-    # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
-    cors:
-        allowed-origins: "*"
-        allowed-methods: "*"
-        allowed-headers: "*"
-        exposed-headers: "Link,X-Total-Count"
-        allow-credentials: true
-        max-age: 1800
-    security:
-        remember-me:
-            # security key (this key should be unique for your application, and kept secret)
-            key: d1b3fa0139598eff7955a5b387733632880bfdd8c7a0cfc75e3c38f251173fecedac52221fd1b14e293d585a5e672688ecd5
-    mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: bionexo@localhost
-        base-url: http://127.0.0.1:8080
-    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
-        jmx:
-            enabled: true
-        prometheus:
-            enabled: false #expose metrics via prometheus
-        logs: # Reports Dropwizard metrics in the logs
-            enabled: false
-            report-frequency: 60 # in seconds
+    async:
+        core-pool-size: 1
+        max-pool-size: 50
+        queue-capacity: 10000
+    # To test logstash appender
     logging:
-        logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
-            enabled: false
+        logstash:
+            enabled: true
             host: localhost
             port: 5000
             queue-size: 512
+    mail:
+        from: test@localhost
+        base-url: http://127.0.0.1:8080
+    security:
+        remember-me:
+            # security key (this key should be unique for your application, and kept secret)
+            key: ae80b3f80efd9c315a0f74327d03eb39c5e8bfd329cdf39f354eefa87b6e685fa63c39480b3b7ec63b63d45f392c838622be
+    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+        jmx.enabled: true
+        logs: # Reports Dropwizard metrics in the logs
+            enabled: true
+            report-frequency: 60 # in seconds
 
 # ===================================================================
 # Application specific properties

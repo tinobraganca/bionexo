@@ -21,7 +21,7 @@
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "rememberMeKey": "d1b3fa0139598eff7955a5b387733632880bfdd8c7a0cfc75e3c38f251173fecedac52221fd1b14e293d585a5e672688ecd5",
+    "rememberMeKey": "ae80b3f80efd9c315a0f74327d03eb39c5e8bfd329cdf39f354eefa87b6e685fa63c39480b3b7ec63b63d45f392c838622be",
     "clientFramework": "angularX",
     "useSass": true,
     "clientPackageManager": "npm",
