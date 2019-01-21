@@ -1,0 +1,95 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-tb-ubs-heading">Create or edit a TB UBS</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!tB_UBS.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="tB_UBS.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_co_latitude">Co Latitude</label>
+                    <input type="text" class="form-control" name="co_latitude" id="field_co_latitude"
+                        [(ngModel)]="tB_UBS.co_latitude" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_co_longitute">Co Longitute</label>
+                    <input type="text" class="form-control" name="co_longitute" id="field_co_longitute"
+                        [(ngModel)]="tB_UBS.co_longitute" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_co_municipio">Co Municipio</label>
+                    <input type="number" class="form-control" name="co_municipio" id="field_co_municipio"
+                        [(ngModel)]="tB_UBS.co_municipio" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_co_cnes">Co Cnes</label>
+                    <input type="number" class="form-control" name="co_cnes" id="field_co_cnes"
+                        [(ngModel)]="tB_UBS.co_cnes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_no_estabelecimento">No Estabelecimento</label>
+                    <input type="text" class="form-control" name="no_estabelecimento" id="field_no_estabelecimento"
+                        [(ngModel)]="tB_UBS.no_estabelecimento" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_no_endereco">No Endereco</label>
+                    <input type="text" class="form-control" name="no_endereco" id="field_no_endereco"
+                        [(ngModel)]="tB_UBS.no_endereco" required/>
+                    <div [hidden]="!(editForm.controls.no_endereco?.dirty && editForm.controls.no_endereco?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.no_endereco?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_no_bairro">No Bairro</label>
+                    <input type="text" class="form-control" name="no_bairro" id="field_no_bairro"
+                        [(ngModel)]="tB_UBS.no_bairro" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_no_cidade">No Cidade</label>
+                    <input type="text" class="form-control" name="no_cidade" id="field_no_cidade"
+                        [(ngModel)]="tB_UBS.no_cidade" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_co_telefone">Co Telefone</label>
+                    <input type="text" class="form-control" name="co_telefone" id="field_co_telefone"
+                        [(ngModel)]="tB_UBS.co_telefone" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_no_estrutra_fisica_ambiencia">No Estrutra Fisica Ambiencia</label>
+                    <input type="text" class="form-control" name="no_estrutra_fisica_ambiencia" id="field_no_estrutra_fisica_ambiencia"
+                        [(ngModel)]="tB_UBS.no_estrutra_fisica_ambiencia" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_no_adap_defic_fisic_idoso">No Adap Defic Fisic Idoso</label>
+                    <input type="text" class="form-control" name="no_adap_defic_fisic_idoso" id="field_no_adap_defic_fisic_idoso"
+                        [(ngModel)]="tB_UBS.no_adap_defic_fisic_idoso" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_no_equipamentos">No Equipamentos</label>
+                    <input type="text" class="form-control" name="no_equipamentos" id="field_no_equipamentos"
+                        [(ngModel)]="tB_UBS.no_equipamentos" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_no_medicamentos">No Medicamentos</label>
+                    <input type="text" class="form-control" name="no_medicamentos" id="field_no_medicamentos"
+                        [(ngModel)]="tB_UBS.no_medicamentos" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

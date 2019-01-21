@@ -1,0 +1,69 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "co_latitude",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "co_longitute",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "co_municipio",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "co_cnes",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "no_estabelecimento",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "no_endereco",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "no_bairro",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "no_cidade",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "co_telefone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "no_estrutra_fisica_ambiencia",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "no_adap_defic_fisic_idoso",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "no_equipamentos",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "no_medicamentos",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20190117190613",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "tb_ubs",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

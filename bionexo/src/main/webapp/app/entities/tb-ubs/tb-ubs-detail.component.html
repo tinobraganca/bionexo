@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="tB_UBS">
+            <h2><span>TB UBS</span> {{tB_UBS.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Co Latitude</span></dt>
+                <dd>
+                    <span>{{tB_UBS.co_latitude}}</span>
+                </dd>
+                <dt><span>Co Longitute</span></dt>
+                <dd>
+                    <span>{{tB_UBS.co_longitute}}</span>
+                </dd>
+                <dt><span>Co Municipio</span></dt>
+                <dd>
+                    <span>{{tB_UBS.co_municipio}}</span>
+                </dd>
+                <dt><span>Co Cnes</span></dt>
+                <dd>
+                    <span>{{tB_UBS.co_cnes}}</span>
+                </dd>
+                <dt><span>No Estabelecimento</span></dt>
+                <dd>
+                    <span>{{tB_UBS.no_estabelecimento}}</span>
+                </dd>
+                <dt><span>No Endereco</span></dt>
+                <dd>
+                    <span>{{tB_UBS.no_endereco}}</span>
+                </dd>
+                <dt><span>No Bairro</span></dt>
+                <dd>
+                    <span>{{tB_UBS.no_bairro}}</span>
+                </dd>
+                <dt><span>No Cidade</span></dt>
+                <dd>
+                    <span>{{tB_UBS.no_cidade}}</span>
+                </dd>
+                <dt><span>Co Telefone</span></dt>
+                <dd>
+                    <span>{{tB_UBS.co_telefone}}</span>
+                </dd>
+                <dt><span>No Estrutra Fisica Ambiencia</span></dt>
+                <dd>
+                    <span>{{tB_UBS.no_estrutra_fisica_ambiencia}}</span>
+                </dd>
+                <dt><span>No Adap Defic Fisic Idoso</span></dt>
+                <dd>
+                    <span>{{tB_UBS.no_adap_defic_fisic_idoso}}</span>
+                </dd>
+                <dt><span>No Equipamentos</span></dt>
+                <dd>
+                    <span>{{tB_UBS.no_equipamentos}}</span>
+                </dd>
+                <dt><span>No Medicamentos</span></dt>
+                <dd>
+                    <span>{{tB_UBS.no_medicamentos}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/tb-ubs', tB_UBS.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

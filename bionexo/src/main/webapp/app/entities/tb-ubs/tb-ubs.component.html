@@ -1,0 +1,78 @@
+<div>
+    <h2 id="page-heading">
+        <span>TB UBS</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-tb-ubs" [routerLink]="['/tb-ubs/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new TB UBS
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="tB_UBS">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Co Latitude</span></th>
+            <th><span>Co Longitute</span></th>
+            <th><span>Co Municipio</span></th>
+            <th><span>Co Cnes</span></th>
+            <th><span>No Estabelecimento</span></th>
+            <th><span>No Endereco</span></th>
+            <th><span>No Bairro</span></th>
+            <th><span>No Cidade</span></th>
+            <th><span>Co Telefone</span></th>
+            <th><span>No Estrutra Fisica Ambiencia</span></th>
+            <th><span>No Adap Defic Fisic Idoso</span></th>
+            <th><span>No Equipamentos</span></th>
+            <th><span>No Medicamentos</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let tB_UBS of tB_UBS ;trackBy: trackId">
+                <td><a [routerLink]="['/tb-ubs', tB_UBS.id, 'view' ]">{{tB_UBS.id}}</a></td>
+                <td>{{tB_UBS.co_latitude}}</td>
+                <td>{{tB_UBS.co_longitute}}</td>
+                <td>{{tB_UBS.co_municipio}}</td>
+                <td>{{tB_UBS.co_cnes}}</td>
+                <td>{{tB_UBS.no_estabelecimento}}</td>
+                <td>{{tB_UBS.no_endereco}}</td>
+                <td>{{tB_UBS.no_bairro}}</td>
+                <td>{{tB_UBS.no_cidade}}</td>
+                <td>{{tB_UBS.co_telefone}}</td>
+                <td>{{tB_UBS.no_estrutra_fisica_ambiencia}}</td>
+                <td>{{tB_UBS.no_adap_defic_fisic_idoso}}</td>
+                <td>{{tB_UBS.no_equipamentos}}</td>
+                <td>{{tB_UBS.no_medicamentos}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/tb-ubs', tB_UBS.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/tb-ubs', tB_UBS.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'tb-ubs/'+ tB_UBS.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

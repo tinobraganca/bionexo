@@ -3,6 +3,8 @@ package br.com.bionexo.config;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.servlet.InstrumentedFilter;
 import com.codahale.metrics.servlets.MetricsServlet;
+
+import br.com.bionexo.task.CargaUbsTask;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.h2.H2ConfigurationHelper;
@@ -45,6 +47,9 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
     private final JHipsterProperties jHipsterProperties;
 
     private MetricRegistry metricRegistry;
+    
+    @Autowired
+    private CargaUbsTask cargaTask;
 
     public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
 
@@ -202,5 +207,10 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
     @Autowired(required = false)
     public void setMetricRegistry(MetricRegistry metricRegistry) {
         this.metricRegistry = metricRegistry;
+    }
+    
+    @Bean
+    public boolean cargaBean() {
+    	return cargaTask.cargaUbs();
     }
 }
