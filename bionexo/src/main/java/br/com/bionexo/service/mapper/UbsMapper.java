@@ -9,7 +9,7 @@ import org.mapstruct.*;
  * Mapper for the entity TB_UBS and its DTO TB_UBSDTO.
  */
 @Mapper(componentModel = "spring", uses = {})
-public interface TB_UBSMapper extends EntityMapper<UbsDTO, PersistentUbs> {
+public interface UbsMapper extends EntityMapper<UbsDTO, PersistentUbs> {
 
 
 

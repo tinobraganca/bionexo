@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -15,7 +16,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import br.com.bionexo.domain.PersistentUbs;
+import br.com.bionexo.repository.UbsRepository;
 import br.com.bionexo.service.CsvService;
+import br.com.bionexo.service.UbsService;
 
 @EnableScheduling
 @Component
@@ -23,6 +27,9 @@ public class CargaUbsTask {
 	
 	@Autowired
 	private CsvService csvService;
+
+	@Autowired
+	private UbsService ubsService;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(CargaUbsTask.class);
 
@@ -45,7 +52,9 @@ public class CargaUbsTask {
 		InputStream ExcelFileToRead;
 		try {
 			ExcelFileToRead = new FileInputStream(filePath3);
-			csvService.lerCsvUbs(ExcelFileToRead);
+			List<PersistentUbs> lstUbs = csvService.lerCsvUbs(ExcelFileToRead);
+			ubsService.saveAll(lstUbs);
+//			saveAndFlush
 			LOG.info("Fim da carga");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

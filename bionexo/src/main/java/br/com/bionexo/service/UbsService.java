@@ -1,5 +1,6 @@
 package br.com.bionexo.service;
 
+import br.com.bionexo.domain.PersistentUbs;
 import br.com.bionexo.service.dto.UbsDTO;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public interface UbsService {
      *
      * @return the list of entities
      */
-    List<UbsDTO> findAll();
+    List<PersistentUbs> findAll();
 
 
     /**
@@ -40,4 +41,6 @@ public interface UbsService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+	void saveAll(List<PersistentUbs> ubsList);
 }

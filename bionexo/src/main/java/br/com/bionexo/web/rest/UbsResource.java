@@ -1,6 +1,8 @@
 package br.com.bionexo.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import br.com.bionexo.domain.PersistentUbs;
 import br.com.bionexo.service.UbsService;
 import br.com.bionexo.web.rest.errors.BadRequestAlertException;
 import br.com.bionexo.web.rest.util.HeaderUtil;
@@ -23,16 +25,16 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class TB_UBSResource {
+public class UbsResource {
 
-    private final Logger log = LoggerFactory.getLogger(TB_UBSResource.class);
+    private final Logger log = LoggerFactory.getLogger(UbsResource.class);
 
     private static final String ENTITY_NAME = "tB_UBS";
 
-    private final UbsService tB_UBSService;
+    private final UbsService UbsService;
 
-    public TB_UBSResource(UbsService tB_UBSService) {
-        this.tB_UBSService = tB_UBSService;
+    public UbsResource(UbsService tB_UBSService) {
+        this.UbsService = tB_UBSService;
     }
 
     /**
@@ -49,7 +51,7 @@ public class TB_UBSResource {
         if (tB_UBSDTO.getId() != null) {
             throw new BadRequestAlertException("A new tB_UBS cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        UbsDTO result = tB_UBSService.save(tB_UBSDTO);
+        UbsDTO result = UbsService.save(tB_UBSDTO);
         return ResponseEntity.created(new URI("/api/tb-ubs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,7 +73,7 @@ public class TB_UBSResource {
         if (tB_UBSDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        UbsDTO result = tB_UBSService.save(tB_UBSDTO);
+        UbsDTO result = UbsService.save(tB_UBSDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, tB_UBSDTO.getId().toString()))
             .body(result);
@@ -84,9 +86,9 @@ public class TB_UBSResource {
      */
     @GetMapping("/tb-ubs")
     @Timed
-    public List<UbsDTO> getAllTB_UBS() {
+    public List<PersistentUbs> getAllTB_UBS() {
         log.debug("REST request to get all TB_UBS");
-        return tB_UBSService.findAll();
+        return UbsService.findAll();
     }
 
     /**
@@ -99,7 +101,7 @@ public class TB_UBSResource {
     @Timed
     public ResponseEntity<UbsDTO> getTB_UBS(@PathVariable Long id) {
         log.debug("REST request to get TB_UBS : {}", id);
-        Optional<UbsDTO> tB_UBSDTO = tB_UBSService.findOne(id);
+        Optional<UbsDTO> tB_UBSDTO = UbsService.findOne(id);
         return ResponseUtil.wrapOrNotFound(tB_UBSDTO);
     }
 
@@ -113,7 +115,7 @@ public class TB_UBSResource {
     @Timed
     public ResponseEntity<Void> deleteTB_UBS(@PathVariable Long id) {
         log.debug("REST request to delete TB_UBS : {}", id);
-        tB_UBSService.delete(id);
+        UbsService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

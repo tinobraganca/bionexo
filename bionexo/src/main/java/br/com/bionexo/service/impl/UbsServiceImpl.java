@@ -4,7 +4,7 @@ import br.com.bionexo.service.UbsService;
 import br.com.bionexo.domain.PersistentUbs;
 import br.com.bionexo.repository.UbsRepository;
 import br.com.bionexo.service.dto.UbsDTO;
-import br.com.bionexo.service.mapper.TB_UBSMapper;
+import br.com.bionexo.service.mapper.UbsMapper;
 
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
@@ -33,15 +33,15 @@ import java.util.stream.Collectors;
 @Transactional
 public class UbsServiceImpl implements UbsService {
 
-    private final Logger log = LoggerFactory.getLogger(UbsServiceImpl.class);
+    private final Logger LOG = LoggerFactory.getLogger(UbsServiceImpl.class);
 
-    private final UbsRepository tB_UBSRepository;
+    private final UbsRepository ubsRepository;
 
-    private final TB_UBSMapper tB_UBSMapper;
+    private final UbsMapper ubsMapper;
 
-    public UbsServiceImpl(UbsRepository tB_UBSRepository, TB_UBSMapper tB_UBSMapper) {
-        this.tB_UBSRepository = tB_UBSRepository;
-        this.tB_UBSMapper = tB_UBSMapper;
+    public UbsServiceImpl(UbsRepository UbsRepository, UbsMapper UbsMapper) {
+        this.ubsRepository = UbsRepository;
+        this.ubsMapper = UbsMapper;
     }
 
     /**
@@ -52,25 +52,39 @@ public class UbsServiceImpl implements UbsService {
      */
     @Override
     public UbsDTO save(UbsDTO tB_UBSDTO) {
-        log.debug("Request to save TB_UBS : {}", tB_UBSDTO);
+        LOG.debug("Request to save TB_UBS : {}", tB_UBSDTO);
 
-        PersistentUbs tB_UBS = tB_UBSMapper.toEntity(tB_UBSDTO);
-        tB_UBS = tB_UBSRepository.save(tB_UBS);
-        return tB_UBSMapper.toDto(tB_UBS);
+        PersistentUbs tB_UBS = ubsMapper.toEntity(tB_UBSDTO);
+        tB_UBS = ubsRepository.save(tB_UBS);
+        return ubsMapper.toDto(tB_UBS);
     }
+    @Override
+    public void saveAll(List<PersistentUbs> ubsList) {
+        LOG.debug("Salvando lista em banco");
 
+    	ubsRepository.saveAll(ubsList);
+    	LOG.debug("Lista salva no banco");
+    }
     /**
      * Get all the tB_UBS.
      *
      * @return the list of entities
      */
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<PersistentUbs> findAll() {
+//        LOG.debug("Request to get all TB_UBS");
+//        ubsRepository.findAll()
+//        return ubsRepository.findAll().stream()
+//            .map(ubsMapper::toDto)
+//            .collect(Collectors.toCollection(LinkedList::new));
+//    }
+//    
     @Override
     @Transactional(readOnly = true)
-    public List<UbsDTO> findAll() {
-        log.debug("Request to get all TB_UBS");
-        return tB_UBSRepository.findAll().stream()
-            .map(tB_UBSMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+    public List<PersistentUbs> findAll() {
+        LOG.debug("Request to get all TB_UBS");
+        return ubsRepository.findAll();
     }
 
 
@@ -83,9 +97,9 @@ public class UbsServiceImpl implements UbsService {
     @Override
     @Transactional(readOnly = true)
     public Optional<UbsDTO> findOne(Long id) {
-        log.debug("Request to get TB_UBS : {}", id);
-        return tB_UBSRepository.findById(id)
-            .map(tB_UBSMapper::toDto);
+        LOG.debug("Request to get TB_UBS : {}", id);
+        return ubsRepository.findById(id)
+            .map(ubsMapper::toDto);
     }
 
     /**
@@ -95,8 +109,8 @@ public class UbsServiceImpl implements UbsService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete TB_UBS : {}", id);
-        tB_UBSRepository.deleteById(id);
+        LOG.debug("Request to delete TB_UBS : {}", id);
+        ubsRepository.deleteById(id);
     }
    
 }
