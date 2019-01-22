@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -21,11 +22,11 @@ public class PersistentUbs implements Serializable {
 	
 	@NotNull
 	@Column(name = "co_latitude")
-	private String co_latitude;
+	private BigDecimal geoCodeLat;
 	
 	@NotNull
 	@Column(name = "co_longitute")
-	private String co_longitute;
+	private BigDecimal geoCodeLong;
 	
 	@NotNull
 	@Column(name = "co_municipio")
@@ -37,11 +38,11 @@ public class PersistentUbs implements Serializable {
 
 	@NotNull
 	@Column(name = "no_estabelecimento")
-	private String no_estabelecimento;
+	private String name;
 	
 	@NotNull
 	@Column(name = "no_endereco", nullable = false)
-	private String no_endereco;
+	private String address;
 	
 	@NotNull
 	@Column(name = "no_bairro")
@@ -49,27 +50,27 @@ public class PersistentUbs implements Serializable {
 	
 	@NotNull
 	@Column(name = "no_cidade")
-	private String no_cidade;
+	private String city;
 	
 	@NotNull
 	@Column(name = "co_telefone")
-	private String co_telefone;
+	private String phone;
 	
 	@NotNull
 	@Column(name = "no_estrutra_fisica_ambiencia")
-	private Long no_estrutra_fisica_ambiencia;
+	private Long size;
 	
 	@NotNull
 	@Column(name = "no_adap_defic_fisic_idoso")
-	private Long no_adap_defic_fisic_idoso;
+	private Long scoresAdaptationForSeniors;
 	
 	@NotNull
 	@Column(name = "no_equipamentos")
-	private Long no_equipamentos;
+	private Long scoresMediceEquipment;
 	
 	@NotNull
 	@Column(name = "no_medicamentos")
-	private Long no_medicamentos;
+	private Long scoresMedice;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -81,31 +82,6 @@ public class PersistentUbs implements Serializable {
 		this.id = id;
 	}
 
-	public String getCo_latitude() {
-		return co_latitude;
-	}
-
-	public PersistentUbs co_latitude(String co_latitude) {
-		this.co_latitude = co_latitude;
-		return this;
-	}
-
-	public void setCo_latitude(String co_latitude) {
-		this.co_latitude = co_latitude;
-	}
-
-	public String getCo_longitute() {
-		return co_longitute;
-	}
-
-	public PersistentUbs co_longitute(String co_longitute) {
-		this.co_longitute = co_longitute;
-		return this;
-	}
-
-	public void setCo_longitute(String co_longitute) {
-		this.co_longitute = co_longitute;
-	}
 
 	public Long getCo_municipio() {
 		return co_municipio;
@@ -133,31 +109,6 @@ public class PersistentUbs implements Serializable {
 		this.co_cnes = co_cnes;
 	}
 
-	public String getNo_estabelecimento() {
-		return no_estabelecimento;
-	}
-
-	public PersistentUbs no_estabelecimento(String no_estabelecimento) {
-		this.no_estabelecimento = no_estabelecimento;
-		return this;
-	}
-
-	public void setNo_estabelecimento(String no_estabelecimento) {
-		this.no_estabelecimento = no_estabelecimento;
-	}
-
-	public String getNo_endereco() {
-		return no_endereco;
-	}
-
-	public PersistentUbs no_endereco(String no_endereco) {
-		this.no_endereco = no_endereco;
-		return this;
-	}
-
-	public void setNo_endereco(String no_endereco) {
-		this.no_endereco = no_endereco;
-	}
 
 	public String getNo_bairro() {
 		return no_bairro;
@@ -172,31 +123,6 @@ public class PersistentUbs implements Serializable {
 		this.no_bairro = no_bairro;
 	}
 
-	public String getNo_cidade() {
-		return no_cidade;
-	}
-
-	public PersistentUbs no_cidade(String no_cidade) {
-		this.no_cidade = no_cidade;
-		return this;
-	}
-
-	public void setNo_cidade(String no_cidade) {
-		this.no_cidade = no_cidade;
-	}
-
-	public String getCo_telefone() {
-		return co_telefone;
-	}
-
-	public PersistentUbs co_telefone(String co_telefone) {
-		this.co_telefone = co_telefone;
-		return this;
-	}
-
-	public void setCo_telefone(String co_telefone) {
-		this.co_telefone = co_telefone;
-	}
 
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters and
 	// setters here, do not remove
@@ -232,35 +158,85 @@ public class PersistentUbs implements Serializable {
 //				+ getNo_equipamentos() + "'" + ", no_medicamentos='" + getNo_medicamentos() + "'" + "}";
 //	}
 
-	public Long getNo_estrutra_fisica_ambiencia() {
-		return no_estrutra_fisica_ambiencia;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setNo_estrutra_fisica_ambiencia(Long no_estrutra_fisica_ambiencia) {
-		this.no_estrutra_fisica_ambiencia = no_estrutra_fisica_ambiencia;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Long getNo_adap_defic_fisic_idoso() {
-		return no_adap_defic_fisic_idoso;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setNo_adap_defic_fisic_idoso(Long no_adap_defic_fisic_idoso) {
-		this.no_adap_defic_fisic_idoso = no_adap_defic_fisic_idoso;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public Long getNo_equipamentos() {
-		return no_equipamentos;
+	public String getCity() {
+		return city;
 	}
 
-	public void setNo_equipamentos(Long no_equipamentos) {
-		this.no_equipamentos = no_equipamentos;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public Long getNo_medicamentos() {
-		return no_medicamentos;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setNo_medicamentos(Long no_medicamentos) {
-		this.no_medicamentos = no_medicamentos;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
+
+	public Long getSize() {
+		return size;
+	}
+
+	public void setSize(Long size) {
+		this.size = size;
+	}
+
+	public Long getScoresAdaptationForSeniors() {
+		return scoresAdaptationForSeniors;
+	}
+
+	public void setScoresAdaptationForSeniors(Long scoresAdaptationForSeniors) {
+		this.scoresAdaptationForSeniors = scoresAdaptationForSeniors;
+	}
+
+	public Long getScoresMediceEquipment() {
+		return scoresMediceEquipment;
+	}
+
+	public void setScoresMediceEquipment(Long scoresMediceEquipment) {
+		this.scoresMediceEquipment = scoresMediceEquipment;
+	}
+
+	public Long getScoresMedice() {
+		return scoresMedice;
+	}
+
+	public void setScoresMedice(Long scoresMedice) {
+		this.scoresMedice = scoresMedice;
+	}
+
+	public BigDecimal getGeoCodeLat() {
+		return geoCodeLat;
+	}
+
+	public void setGeoCodeLat(BigDecimal geoCodeLat) {
+		this.geoCodeLat = geoCodeLat;
+	}
+
+	public BigDecimal getGeoCodeLong() {
+		return geoCodeLong;
+	}
+
+	public void setGeoCodeLong(BigDecimal geoCodeLong) {
+		this.geoCodeLong = geoCodeLong;
+	}
+
 }

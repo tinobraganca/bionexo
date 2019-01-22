@@ -23,7 +23,7 @@ spring:
     app:
         csv:
             file:
-                path: D:\dev\Bionexo\csv\ubs.xlsx
+                path: D:\dev\Bionexo\csv\ubs.csv
         cron: '* * 12 * * ?'
     profiles:
         active: dev

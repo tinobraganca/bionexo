@@ -7,6 +7,6 @@ import br.com.bionexo.domain.PersistentUbs;
 
 public interface CsvService {
 	
-	public List<PersistentUbs> lerCsvUbs(InputStream is);
+	public List<PersistentUbs> lerCsvUbs(String is);
 
 }

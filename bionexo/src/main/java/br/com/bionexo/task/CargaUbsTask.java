@@ -35,28 +35,21 @@ public class CargaUbsTask {
 
 	@Autowired
 	Environment env;
+	
 	@Autowired
 	Properties properties;
 	
 	@Value("${spring.app.csv.file.path}")
-	public String filePath3;
-//	
-//	@Value("${spring.app.csv.cron}")
-//	public String cronTask;
-	
-	
+	public String filePath;
+
 	@Scheduled(cron = "* * 12 * * ?")
 	public boolean cargaUbs() {
 		LOG.info("Executando rotina de carga da planilha de Ubs...");
-		System.out.println(filePath3);
-		InputStream ExcelFileToRead;
 		try {
-			ExcelFileToRead = new FileInputStream(filePath3);
-			List<PersistentUbs> lstUbs = csvService.lerCsvUbs(ExcelFileToRead);
+			List<PersistentUbs> lstUbs = csvService.lerCsvUbs(filePath);
 			ubsService.saveAll(lstUbs);
-//			saveAndFlush
 			LOG.info("Fim da carga");
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

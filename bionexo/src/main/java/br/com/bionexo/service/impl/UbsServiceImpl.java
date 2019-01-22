@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -87,6 +88,12 @@ public class UbsServiceImpl implements UbsService {
         return ubsRepository.findAll();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<PersistentUbs> findAllByLatLong(BigDecimal lat, BigDecimal longitude) {
+    	return ubsRepository.findAllByLatAndLong(lat, longitude);
+    }
+    
 
     /**
      * Get one tB_UBS by id.

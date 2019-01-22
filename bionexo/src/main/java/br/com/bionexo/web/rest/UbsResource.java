@@ -14,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -84,6 +87,14 @@ public class UbsResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of tB_UBS in body
      */
+    @GetMapping("/tb-ubs-range")
+    @Timed
+    public List<PersistentUbs> getAllByLatLong(@RequestParam(value = "latitude") String latitude, @RequestParam(value = "longitude") String longitude) {
+        log.debug("REST request to get all TB_UBS");
+        
+        return UbsService.findAllByLatLong(new BigDecimal(latitude), new BigDecimal(longitude));
+    }
+    
     @GetMapping("/tb-ubs")
     @Timed
     public List<PersistentUbs> getAllTB_UBS() {

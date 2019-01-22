@@ -1,18 +1,14 @@
 package br.com.bionexo.service.impl;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,28 +22,28 @@ public class CsvServiceImpl implements CsvService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CsvService.class);
 
-	public List<PersistentUbs> lerCsvUbs(InputStream is) {
-		XSSFWorkbook workbook;
+	public List<PersistentUbs> lerCsvUbs(String is) {
+//		XSSFWorkbook workbook;
 		List<PersistentUbs> ubslst = new ArrayList<PersistentUbs>();
+		long i = 0L;
+		String line = "";
+		String cvsSplitBy = ",";
 		try {
-			workbook = new XSSFWorkbook(is);
-			FormulaEvaluator objFormulaEvaluator = new XSSFFormulaEvaluator(workbook);
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			Iterator<Row> ite = sheet.rowIterator();
-			long i = 0L;
-			while (ite.hasNext()) {
-				Row row = ite.next();
-				if (row.getRowNum() == 0) {
-					continue; // Pula linha header
-				}
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(is), "UTF8"));
+	            while ((line = br.readLine()) != null) {
+	                // use comma as separator
+	                String[] lineS = line.split(cvsSplitBy);
+	                if(i != 0L) {
+	                	LOG.debug(String.format("Lendo a linha: %s ",String.valueOf(i)));
+		                PersistentUbs ubs = this.lerLinha(lineS);
+		                LOG.debug(String.format("Objeto criado referente a linha: %s ",String.valueOf(i)));
+		                ubslst.add(ubs);	
+	                }
+	                i++;
 
-				LOG.debug(String.format("Lendo a linha: %s ",String.valueOf(i)));
-				PersistentUbs ubs = this.lerLinha(row);
-				LOG.debug(String.format("Objeto criado referente a linha: %s ",String.valueOf(i)));
-				i++;
-				ubslst.add(ubs);
-			}
-		} catch (IOException e) {
+	            }
+
+			}catch (IOException e) {
 			LOG.error("Ocorreu um erro ao carregar a planilha");
 			LOG.error(e.getMessage());
 		}
@@ -55,22 +51,22 @@ public class CsvServiceImpl implements CsvService {
 
 	}
 
-	private PersistentUbs lerLinha(Row row) {
+	private PersistentUbs lerLinha(String[] line) {
 		PersistentUbs ubs = new PersistentUbs();
-
-		ubs.setCo_latitude(getCellValueString(row.getCell(0)).trim());
-		ubs.setCo_longitute(getCellValueString(row.getCell(1)).trim());
-		ubs.setCo_municipio(getLongValue(row.getCell(2)));
-		ubs.setCo_cnes(getLongValue(row.getCell(3)));
-		ubs.setNo_estabelecimento(getCellValueString(row.getCell(4)).trim());
-		ubs.setNo_endereco(getCellValueString(row.getCell(5)).trim());
-		ubs.setNo_bairro(getCellValueString(row.getCell(6)).trim());
-		ubs.setNo_cidade(getCellValueString(row.getCell(7)).trim());
-		ubs.setCo_telefone(getCellValueString(row.getCell(8)).trim());
-		ubs.setNo_estrutra_fisica_ambiencia(getEnumValue(getCellValueString(row.getCell(9)).trim()));
-		ubs.setNo_adap_defic_fisic_idoso(getEnumValue(getCellValueString(row.getCell(10)).trim()));
-		ubs.setNo_equipamentos(getEnumValue(getCellValueString(row.getCell(11)).trim()));
-		ubs.setNo_medicamentos(getEnumValue(getCellValueString(row.getCell(12)).trim()));
+		
+		ubs.setGeoCodeLat(getValueBigDecimal(line[0]));
+		ubs.setGeoCodeLong(getValueBigDecimal(line[1]));
+		ubs.setCo_municipio(getLongValue(line[2]));
+		ubs.setCo_cnes(getLongValue(line[3]));
+		ubs.setName(getValueString(line[4]));
+		ubs.setAddress(getValueString(line[5]).trim());
+		ubs.setNo_bairro(getValueString(line[6]).trim());
+		ubs.setCity(getValueString(line[7]).trim());
+		ubs.setPhone(getValueString(line[8]).trim());
+		ubs.setSize(getEnumValue(getValueString(line[9]).trim()));
+		ubs.setScoresAdaptationForSeniors(getEnumValue(getValueString(line[10]).trim()));
+		ubs.setScoresMediceEquipment(getEnumValue(getValueString(line[11]).trim()));
+		ubs.setScoresMedice(getEnumValue(getValueString(line[12]).trim()));
 
 		return ubs;
 	}
@@ -80,42 +76,31 @@ public class CsvServiceImpl implements CsvService {
 		return Long.valueOf(tipo.getCodigo());
 	}
 
-	private Long getLongValue(Cell c) {
+	private Long getLongValue(String s) {
 		Long ret = 0L;
 		try {
-			ret = (long) c.getNumericCellValue();
+			ret = Long.valueOf(s);
 
 		} catch (NumberFormatException e) {
-			LOG.error("Ocorreu um erro no parse da coluna: ", c.getRow());
+			LOG.error("Ocorreu um erro no parse da coluna: {}", s);
 			LOG.error(e.getMessage());
 		}
 		return ret;
 	}
+	
+	private static BigDecimal getValueBigDecimal(String s) {
+		return new BigDecimal(s);
+	}
 
-	private static String getCellValueString(Cell c) {
-		String value = "";
-		if (c != null) {
-			switch (c.getCellType()) {
-			case Cell.CELL_TYPE_BOOLEAN:
-				value = String.valueOf(c.getBooleanCellValue());
-				break;
-			case Cell.CELL_TYPE_NUMERIC:
-				value = BigDecimal.valueOf(c.getNumericCellValue()).toPlainString();
-				break;
-			case Cell.CELL_TYPE_STRING:
-				value = String.valueOf(c.getStringCellValue());
-				break;
-			case Cell.CELL_TYPE_FORMULA:
-				value = String.valueOf(c.getCellFormula());
-				break;
-			case Cell.CELL_TYPE_BLANK:
-				value = "";
-				break;
-			}
+	private static String getValueString(String s) {
+		String v = "Valor nao informado";
+		if (s != null) {
+			v = s.trim();
 		} else {
 			LOG.error("Cell is null");
 		}
-		return value.trim();
+		return v;
+		
 	}
 
 }

@@ -3,6 +3,7 @@ package br.com.bionexo.service;
 import br.com.bionexo.domain.PersistentUbs;
 import br.com.bionexo.service.dto.UbsDTO;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,4 +44,6 @@ public interface UbsService {
     void delete(Long id);
 
 	void saveAll(List<PersistentUbs> ubsList);
+
+	List<PersistentUbs> findAllByLatLong(BigDecimal lat, BigDecimal longitude);
 }
