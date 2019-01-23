@@ -1,0 +1,24 @@
+agm-map {
+    height: 100vh;
+    margin-top: -60px;
+    padding-top: 60px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #ccc;
+  }
+    
+  * {
+    font-family: Lato;
+  }
+  
+  a {
+    color: darkblue;
+  }
+
+agm-info-window-content {
+    background:#ccc;
+    border: 1px solid #00d6d4;
+    color: #00d6d4;
+    
+  }
+  

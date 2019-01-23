@@ -1,0 +1,28 @@
+nav.topo {
+    background-color: #00d6d4;
+    height: 60px;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #fff;
+  }
+  
+  nav.topo .slice {
+    height: 60px;
+  }
+  nav.topo .slice.left {
+    border-right: 1px solid #00adab;
+    text-align: right;
+  }
+  
+  nav.topo .slice.middle {
+    border-left: 1px solid #29e4eb;
+    border-right: 1px solid #29e4eb;
+    text-align: center;
+    font-size: 30px;
+    line-height: 60px;
+  }
+  
+  nav.topo .slice.right {
+    border-left: 1px solid #00adab;
+  }
+  

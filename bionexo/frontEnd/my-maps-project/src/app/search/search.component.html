@@ -1,0 +1,8 @@
+<div class="search">
+  <div class="search-box">
+      
+      <input type="text" class="search-input" (input)="atualizaResposta($event)"
+      [value]= "resposta">
+  </div>
+  <app-lista [markersRetorno]="markersRetorno" (latLngLista)="latLngListaRepasse($event)"></app-lista>
+</div>

@@ -1,0 +1,17 @@
+<div class="search-results">
+    <ul>
+        <!-- RESULT ITEM -->
+        <li class="result-item" *ngFor="let o of markersRetorno; let i = index">
+          <a href="#" (click)="recuperaLocal(o.geoCodeLat, o.geoCodeLong)">
+            <label>{{i + ' .'+ o.name}}</label>
+            <address>{{o.address + ', '+ o.no_bairro + ' - ' + o.city}}</address>
+            
+            <div class="phone">
+                <b>Telefone</b><br/>
+               {{o.phone}}
+            </div>
+          </a>
+        </li>
+        <!-- --------- -->
+    </ul>
+</div>
