@@ -1,100 +1,39 @@
 # bionexo
-This application was generated using JHipster 5.7.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.7.0](https://www.jhipster.tech/documentation-archive/v5.7.0).
+Aplicação gerada usando JHipster 5.7.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.7.0](https://www.jhipster.tech/documentation-archive/v5.7.0).
 
-## Development
+## Tecnologias usadas
+Spring-boot
+Spring-rest
+H2 DB
+Spring-data
+JPA ORM
+AngularJS
 
-To start your application in the dev profile, simply run:
+## Projeto
+	O projeto foi separado em dois, frontEnd e backEnd.
+	
+	O frontEnd encontra-se no caminho frontEnd/my-maps-app/, para executar basta roda ng server
 
-    
-
-
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
-
-### Using angular-cli
-
-You can also use [Angular CLI][] to generate some custom client code.
-
-For example, the following command:
-
-    ng generate component my-component
-
-will generate few files:
-
-    create src/main/webapp/app/my-component/my-component.component.html
-    create src/main/webapp/app/my-component/my-component.component.ts
-    update src/main/webapp/app/app.module.ts
-
-
-## Building for production
-
-To optimize the bionexo application for production, run:
-
-
-To ensure everything worked, run:
+	O banckEnd basta executar o comando "mvn spring-boot:run -Pdev"
 
 
 
-Refer to [Using JHipster in production][] for more details.
+### Backend
 
-## Testing
+	Quando o projeto é executado ele roda um bean chamado "cargaBean" que está no arquivo src/main/java/br/com/bionexo/config/WebConfigurer.java.
+	Esse bean roda uma task que ler a variavel spring.app.csv.file.path, para saber o local do arquivo .csv disponibilizado pelo gorverno, essa variavel está no arquivo bionexo/src/main/resources/config/application-dev.yml.
+	Após ler essa variavel o projeto executa um parse de .csv para Object e coloca em uma lista na memoria, após executar o parse, essa lista é salva em um banco H2 em memoria usando um insert em batch.
+	Só após esse fluxo a api fica disponivel.
 
-To launch your application's tests, run:
-
-    ./gradlew test
-
-For more information, refer to the [Running tests page][].
-
-### Code quality
-
-Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
-
-```
-docker-compose -f src/main/docker/sonar.yml up -d
-```
-
-Then, run a Sonar analysis:
-
-```
-./gradlew -Pprod clean test sonarqube
-```
-
-For more information, refer to the [Code quality page][].
-
-## Using Docker to simplify development (optional)
-
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
-
-For example, to start a  database in a docker container, run:
-
-    docker-compose -f src/main/docker/.yml up -d
-
-To stop it and remove the container, run:
-
-    docker-compose -f src/main/docker/.yml down
-
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
-
-    
-
-Then run:
-
-    docker-compose -f src/main/docker/app.yml up -d
-
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
-
-## Continuous Integration (optional)
-
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
-
-[JHipster Homepage and latest documentation]: https://www.jhipster.tech
-[JHipster 5.7.0 archive]: https://www.jhipster.tech/documentation-archive/v5.7.0
-
-[Using JHipster in development]: https://www.jhipster.tech/documentation-archive/v5.7.0/development/
-[Using Docker and Docker-Compose]: https://www.jhipster.tech/documentation-archive/v5.7.0/docker-compose
-[Using JHipster in production]: https://www.jhipster.tech/documentation-archive/v5.7.0/production/
-[Running tests page]: https://www.jhipster.tech/documentation-archive/v5.7.0/running-tests/
-[Code quality page]: https://www.jhipster.tech/documentation-archive/v5.7.0/code-quality/
-[Setting up Continuous Integration]: https://www.jhipster.tech/documentation-archive/v5.7.0/setting-up-ci/
+### Endpoints-api
+	
+	Aplicação tem conta com alguns endpoints não usados mas que são gerados pelo Jhipster, os endpoint realmente usados são:
+		localhost:8080/tb-ubs-range?latitude=xx&longitude=xxx, vai retornar as 10 mais proximas Ubs em um raio maximo de 30km
+		localhost:8080/tb-ubs, vai retornar todas as Ubs
 
 
+## Frontend
+
+	O frontEnd carrega automaticamente o googlemaps, com a latitude e longitude inicial do Rio de Janeiro.
+	O campo input serve para digitar o endereço de busca, após é efetuada uma chamada a api de geolocation do google, que retorna com a latitude e longitude daquele endereço inputado, e efetua um consulta a api passando a latitude e longitude retornada do serviço da google, após a consulta preenche o mapa com os 10 markers mais proximos no raio maximo de 30km.
+	A lista é preenchida usando o mesmo fluxo.
