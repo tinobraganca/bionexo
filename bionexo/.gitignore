@@ -19,7 +19,7 @@ hs_err_pid*
 .settings/
 /bin
 /target
-front-end/my-maps-project/node_modules
+/front-end/my-maps-project/node_modules
 /node_modules
 
 node_modules/
