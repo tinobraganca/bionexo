@@ -13,7 +13,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 /**
  * Service Implementation for managing TB_UBS.
@@ -71,16 +71,7 @@ public class UbsServiceImpl implements UbsService {
      *
      * @return the list of entities
      */
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<PersistentUbs> findAll() {
-//        LOG.debug("Request to get all TB_UBS");
-//        ubsRepository.findAll()
-//        return ubsRepository.findAll().stream()
-//            .map(ubsMapper::toDto)
-//            .collect(Collectors.toCollection(LinkedList::new));
-//    }
-//    
+
     @Override
     @Transactional(readOnly = true)
     public List<PersistentUbs> findAll() {

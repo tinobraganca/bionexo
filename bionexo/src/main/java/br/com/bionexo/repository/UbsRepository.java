@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UbsRepository extends JpaRepository<PersistentUbs, Long> {
 	
-	@Query(value = "SELECT * FROM tb_ubs WHERE  ( co_latitude BETWEEN (?1 - 0.44915558749551) AND  (?1 + 0.44915558749551)) AND (co_longitute BETWEEN (?2 - 0.45220222483495) AND (?2 + 0.45220222483495 ))", nativeQuery = true)
+	@Query(value = "SELECT * FROM tb_ubs WHERE  ( co_latitude BETWEEN (?1 - 0.44915558749551) AND  (?1 + 0.44915558749551)) AND (co_longitute BETWEEN (?2 - 0.45220222483495) AND (?2 + 0.45220222483495 )) LIMIT 10 ", nativeQuery = true)
 	List<PersistentUbs> findAllByLatAndLong(BigDecimal lat, BigDecimal longitude);
 	
 

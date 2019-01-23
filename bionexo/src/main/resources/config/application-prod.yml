@@ -15,9 +15,9 @@
 
 logging:
     level:
-        ROOT: INFO
-        br.com.bionexo: INFO
-        io.github.jhipster: INFO
+        ROOT: DEBUG
+        br.com.bionexo: DEBUG
+        io.github.jhipster: DEBUG
 
 spring:
     devtools:
